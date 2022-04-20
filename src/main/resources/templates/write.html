@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--    <script src="basic.js"></script>-->
+    <script type="application/javascript">
+
+        function save(){
+            let title = $('#title').val()
+            let name = $('#name').val()
+            let content = $('#content').val()
+
+            if (title.trim().length == 0){
+                alert("제목을 입력해주세요")
+                $('#title').focus();
+                // $('#title').val("제목은 필수!");
+            }else if(name.trim().lengt == 0){
+                alert("이름을 입력해주세요")
+            }else if(content.trim().length == 0){
+                alert("내용을 입력해주세요")
+            }else{
+                let data = {
+                    "post_title": title,
+                    "nickname": name,
+                    "post_contents": content
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/posts',
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (response){
+                        console.log(response)
+                        alert("글이 작성되었습니다.")
+                        window.location.href = "/"
+                    }
+
+
+                })
+            }
+
+       }
+        function cancel(){
+            location.href = "/";
+        }
+    </script>
+
+    <title>온로그 작성하기</title>
+</head>
+<body>
+<div class="header">
+    온:Own 로그
+</div>
+<div class="nav">
+    <div class="nav-see active">
+        온로그 작성하기
+    </div>
+</div>
+<div id="see-area">
+<!--    <form action="/board" method="post">-->
+        <div id="list-container">
+            <form action = "/api/posts" method='post' enctype='multipart/form-data'>
+                <div class="post">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="post_title" style="width:485px;height:20px;font-size:15px;">
+                    <br><br>
+
+<!--                    <label for="name">이름</label>-->
+<!--                    <input type="text" id="name" name="nickname" style="width:100px;height:20px;font-size:13px;">-->
+<!--                    <br><br>-->
+
+                    <label for="content">내용</label>
+                    <textarea id="content" name="post_contents" rows="10" cols="65">It was a dark and stormy night...</textarea>
+
+                    <input type='file' name='images' multiple='multiple'>
+                    <input type='submit'>
+                </div>
+            </form>
+        </div>
+<!--        <button class="write" onclick="save()">저장하기</button>-->
+        <button class="cancel" onclick="cancel()">취소</button>
+<!--    </form>-->
+</div>
+</body>
+</html>

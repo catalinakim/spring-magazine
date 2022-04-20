@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:title" content="매거진">
+    <meta property="og:description" content="Personal 매거진입니다.">
+    <meta property="og:image" content="images/og_selectshop.png">
+    <link href="https://fonts.googleapis.com/css2?family=family=Nanum+Gothic&display=swap" rel="stylesheet">
+<!--    <link rel="stylesheet" href="../static/css/style.css">-->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--    <script src="../static/basic.js"></script>-->
+    <script src="basic.js"></script>
+    <title>매거진</title>
+</head>
+<body>
+
+    <div class="header" style="position:relative;">
+        <div id="header-title-login-user">
+            <span class="nickname" th:text="${username}"> 님을 위한</span>
+        </div>
+        <div id="header-title-select-shop">
+            매거진
+        </div>
+
+        <form id="my_form" method="post" action="/user/logout">
+            <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
+        </form>
+    </div>
+
+    <div class="nav">
+        <div class="nav-see active">
+            Personal 매거진
+        </div>
+    </div>
+    <div id="see-area">
+        <div id="list-container">
+            <a href="/api/posts/1">글1번 조회 API</a>
+
+        </div>
+        <button class="write" onclick="location.href='/write'">글쓰기</button>
+    </div>
+</body>
+</html>
