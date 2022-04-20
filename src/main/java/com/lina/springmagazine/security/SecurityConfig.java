@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**");
         web.ignoring().antMatchers("/h2-console/**");
-        web.ignoring().antMatchers("/api/posts");  //for ARC?
+        //web.ignoring().antMatchers("/api/posts");  //for ARC?
     }
 
     @Override

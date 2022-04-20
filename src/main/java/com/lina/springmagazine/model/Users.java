@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-//@Setter
 @Getter
 @NoArgsConstructor
 @Entity
@@ -55,10 +54,6 @@ public class Users extends TimeStamp{
         this.password = userDto.getPassword();
         //this.role = role;
     }
-
-//    public String getNickname(){
-//        return this.nickname;
-//    }
 
 
 }
