@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -56,10 +57,10 @@ public class PostController {
                 post.setImages(file.getOriginalFilename());
                 // 경로 지정
                 //String path = "C:\\Users\\sesan\\IdeaProjects\\spring-magazine\\src\\main\\resources\\static\\images\\";
-                String path = request.getSession().getServletContext().getRealPath("/") + "resources/static/images/";  //톰캣경로..
+                //String path = request.getSession().getServletContext().getRealPath("/") + "resources/static/images/";  //톰캣경로..
                 //String path = "/home/ubuntu/images/"; //AWS fail
-                String userHome = System.getProperty("user.home");
-                File file_ = new File(userHome + "/images/" + file.getOriginalFilename());
+                String path = System.getProperty("user.home");
+                File file_ = new File(path + "/images/" + file.getOriginalFilename());
                 if(!file_.exists()){
                     file_.mkdirs();
                 }
