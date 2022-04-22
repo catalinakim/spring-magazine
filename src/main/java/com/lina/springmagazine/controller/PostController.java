@@ -33,16 +33,14 @@ public class PostController {
     @PostMapping("/api/posts")
     public ResponseEntity writeBoard(
             @RequestParam(value="images", required=false) MultipartFile file,
-            @RequestParam(value="post_title") String post_title,
-            @RequestParam(value="post_contents") String post_contents,
+            @RequestParam(value="postTitle") String postTitle,
+            @RequestParam(value="postContents") String postContents,
             HttpServletRequest request,
             @AuthenticationPrincipal UserImpl userImpl  //Users -> User -> UserImpl
     ) throws Exception {
         Users userInfo;
         if(userImpl != null){
             System.out.println("Nick:" + userImpl.getUsername());  //null->수정
-            //Posts post = new Posts(post_title, post_contents, nickname);
-            //Users userInfo = userRepository.findByNickname(user.getUsername()).orElseThrow(
             userInfo = userRepository.findByNickname(userImpl.getUsername()).orElseThrow(
                     () -> new NullPointerException("해당 닉네임이 존재하지 않습니다."));
         }else{
@@ -51,7 +49,7 @@ public class PostController {
         }
 
         //Posts post = new Posts(post_title, post_contents, userInfo);  //user번호가 들어감, 다이어그램 화살표는 생김
-        Posts post = new Posts(post_title, post_contents, userImpl.getUsername()); // ARC툴에서 로그인, 글쓰기하면 user가 null
+        Posts post = new Posts(postTitle, postContents, userImpl.getUsername()); // ARC툴에서 로그인, 글쓰기하면 user가 null
 
         try {
             if (!file.isEmpty()){
@@ -78,7 +76,7 @@ public class PostController {
     @ResponseBody
     public List<Posts> getBoardList(){
         //return postRepository.findAll(Sort.by(Sort.Direction.DESC, "created_at"));
-        return postRepository.findAllByOrderByCreatedatDesc();
+        return postRepository.findAllByOrderByCreatedAtDesc();
         //return postRepository.findAll();
     }
 
@@ -103,5 +101,7 @@ public class PostController {
     public Long delBoard(@PathVariable Long id){
         postRepository.deleteById(id);
         return id;
+
     }
+
 }

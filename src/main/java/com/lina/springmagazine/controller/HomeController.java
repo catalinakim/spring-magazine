@@ -5,6 +5,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
@@ -22,13 +24,20 @@ public class HomeController {
         return "write";
     }
 
-    //    @GetMapping("/index")
-//    public String index() {
-//        return "index";
-//    }
+    @GetMapping("/index")
+    public String index() {
+        return "index";
+    }
 
     @GetMapping("/error")
     public String loginError() {
         return "error";
     }
+
+    @GetMapping("/post/{id}")
+    public String viewPost(Model model, @PathVariable Long id) {
+        model.addAttribute("postNo", id);
+        return "board";
+    }
+
 }

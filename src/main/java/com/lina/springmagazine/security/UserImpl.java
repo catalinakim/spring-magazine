@@ -15,7 +15,7 @@ public class UserImpl implements UserDetails {
     private final Users user;
 
     public UserImpl(Users user) {
-        System.out.println(user.getNickname());
+        System.out.println("UserImpl 생성:" + user.getNickname());
         this.user = user;
     }
 
@@ -56,7 +56,7 @@ public class UserImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //return Collections.emptyList();
-        System.out.println("in UserImpl");
+        System.out.println("in UserImpl, getAuthorities()");
 
         // 로그인된 user 의 권한을 가져와서
         // 걔를 스프링 시큐리티의 규칙에 맞춰서 보내주기

@@ -14,31 +14,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--    <script src="../static/basic.js"></script>-->
     <script src="basic.js"></script>
+    <script>
+        $(document).ready(function () {
+            showPostList();
+        })
+        function showPostList() {
+            // 1. GET /board 요청
+            $.ajax({
+                type: 'GET',
+                url: '/api/posts',
+                success: function (response) {
+                    console.log(response)
+                    // 2. for 문마다 게시글 HTML 만들어서 목록에 붙이기
+                    for (let i = 0; i < response.length; i++) {
+                        let board = response[i];
+                        let tempHtml = makeList(board);
+                        $('#list-container').append(tempHtml);
+                    }
+                }
+            })
+        }
+
+        function makeList(board) {
+            return `<div class="post" onclick="location.href='/post/${board.postNo}'">
+                <div class="title">
+                    ${board.postTitle}
+                </div>
+                <div class="nameDate">
+                    <span>${board.nickname}</span> ${board.createdAt}  view: ${board.views}
+                </div>
+            </div>`;
+        }
+
+    </script>
     <title>매거진</title>
 </head>
 <body>
 
     <div class="header" style="position:relative;">
         <div id="header-title-login-user">
-            <span class="nickname" th:text="${username}"> 님을 위한</span>
+            <span class="nickname" th:text="${username}+'님을 위한'"></span>
         </div>
         <div id="header-title-select-shop">
             매거진
         </div>
 
-        <form id="my_form" method="post" action="/user/logout">
+        <form id="my_form" method="post" action="/api/logout">
             <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
         </form>
     </div>
 
     <div class="nav">
         <div class="nav-see active">
-            Personal 매거진
+            매거진
         </div>
     </div>
     <div id="see-area">
         <div id="list-container">
-            <a href="/api/posts/1">글1번 조회 API</a>
+<!--            <a href="/api/posts/1">글1번 조회 API</a>-->
 
         </div>
         <button class="write" onclick="location.href='/write'">글쓰기</button>

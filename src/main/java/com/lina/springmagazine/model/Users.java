@@ -22,10 +22,11 @@ public class Users extends TimeStamp{
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_GENERATOR")
     @Id
-    private Long user_no;
+    @Column(name="user_no")
+    private Long userNo; //user_no
 
     @Column(nullable = false, unique = true, name="user_id")
-    private String userId;
+    private String username; //userId;
 
     @Column(nullable = false)
     private String email;
@@ -39,8 +40,8 @@ public class Users extends TimeStamp{
 //    @Enumerated(value = EnumType.STRING)
 //    private UserRoleEnum role;
 
-    public Users(String user_id, String email, String nickname, String password){
-        this.userId = user_id;
+    public Users(String username, String email, String nickname, String password){
+        this.username = username;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
@@ -48,7 +49,7 @@ public class Users extends TimeStamp{
 
     //public Users(UserDto userDto, UserRoleEnum role){
     public Users(UserDto userDto){
-        this.userId = userDto.getUser_id();
+        this.username = userDto.getUsername();
         this.email = userDto.getEmail();
         this.nickname = userDto.getNickname();
         this.password = userDto.getPassword();

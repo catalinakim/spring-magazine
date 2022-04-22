@@ -7,23 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="/style.css">
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
 </head>
 <body>
 <div id="login-form">
-    <div id="login-title">Log into Select Shop</div>
-
-<!--    <button id="login-id-btn" onclick="location.href='/user/signup'">-->
-<!--        회원 가입하기-->
-<!--    </button>-->
+    <div id="login-title">Log into Magazine</div>
+    <br>
+    <button id="login-id-btn" onclick="location.href='/api/register'">
+        회원 가입하기
+    </button>
+    <br><br>
     <form action="/api/login" method="post">
-        <div class="login-id-label">닉네임</div>
-        <input type="text" name="nickname" class="login-input-box" value="aaa">
+        <div class="login-id-label">유저네임</div>
+<!--        <input type="text" name="username" class="login-input-box" value="aaa">-->
+        <input type="text" name="username" class="login-input-box">
 
         <div class="login-id-label">비밀번호</div>
-        <input type="password" name="password" class="login-input-box" value="1234">
+<!--        <input type="password" name="password" class="login-input-box" value="1234">-->
+        <input type="password" name="password" class="login-input-box">
 
         <button id="login-id-submit">로그인</button>
     </form>

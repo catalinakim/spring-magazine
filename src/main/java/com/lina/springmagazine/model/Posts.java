@@ -22,13 +22,14 @@ public class Posts extends TimeStamp{
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POST_SEQ_GENERATOR")
     @Id
-    private Long post_no;
+    @Column(name="post_no")
+    private Long postNo;
 
-    @Column(nullable = false)
-    private String post_title;
+    @Column(nullable = false, name="post_title")
+    private String postTitle;
 
-    @Column(nullable = false)
-    private String post_contents;
+    @Column(nullable = false, name="post_contents")
+    private String postContents;
 
     @Column(nullable = false)
     private String nickname;  // FK
@@ -49,8 +50,8 @@ public class Posts extends TimeStamp{
 
     public Posts(PostDto postDto){
 //    public Posts(PostDto postDto, Users user){
-        this.post_title = postDto.getPost_title();
-        this.post_contents = postDto.getPost_contents();
+        this.postTitle = postDto.getPostTitle();
+        this.postContents = postDto.getPostContents();
 //        this.nickname = postDto.getNickname();
 //        this.user = user;
         this.likes = 0;
@@ -64,8 +65,8 @@ public class Posts extends TimeStamp{
 //    }
 
     public Posts(String post_title, String post_contents, String nickname){
-        this.post_title = post_title;
-        this.post_contents = post_contents;
+        this.postTitle = post_title;
+        this.postContents = post_contents;
         this.nickname = nickname;
 //        this.user = user;
     }
@@ -73,8 +74,8 @@ public class Posts extends TimeStamp{
 
 
     public void update(PostDto postDto){
-        this.post_title = postDto.getPost_title();
-        this.post_contents = postDto.getPost_contents();
+        this.postTitle = postDto.getPostTitle();
+        this.postContents = postDto.getPostContents();
         this.images = postDto.getImages();
     }
 

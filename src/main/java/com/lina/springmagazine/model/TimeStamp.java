@@ -19,10 +19,11 @@ public abstract class TimeStamp {
     @CreatedDate //Entity가 생성되어 저장될 때 시간이 자동 저장
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     @Column(name = "created_at")
-    private LocalDateTime createdat;
+    private LocalDateTime createdAt;
     //private LocalDateTime created_at; //언더바 https://sunpil.tistory.com/302
 
     @LastModifiedDate //조회한 Entity의 값을 변경할 때 시간이 자동 저장
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
-    private LocalDateTime modified_at;
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 }

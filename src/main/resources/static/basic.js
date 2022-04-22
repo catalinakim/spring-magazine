@@ -26,7 +26,7 @@ $(document).ready(function () {
         $('#search-area').show();
     })
 
-    showBoardList();
+    //showBoardList();
 })
 
 function showBoardList() {

@@ -60,14 +60,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // [로그인 기능]
                     .formLogin()
                     .loginPage("/login")  // 접근이 차단된 페이지 클릭시 이동할 url
-                    .usernameParameter("nickname")      // form 태그 내 id에 맵핑되는 name
+                    //.usernameParameter("nickname")      // form 태그 내 id에 맵핑되는 name
                     .loginProcessingUrl("/api/login") // 로그인 처리시 맵핑되는 url
                     .defaultSuccessUrl("/", true)  // 로그인 처리 후 성공 시 URL
                     .failureUrl("/error")  // 로그인 처리 후 실패 시 URL
                     .permitAll() //무조건 접근을 허용 */
                 .and()
                     .logout()
-                    .logoutUrl("/logout")
+                    .logoutUrl("/api/logout")
                     .deleteCookies("JSESSIONID")
                     .permitAll();
                     //.logoutSuccessHandler(logoutSuccessHandler());

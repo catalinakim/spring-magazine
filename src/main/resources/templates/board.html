@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="application/javascript">
+        let postNo = [[${postNo}]];
+        console.log("postNo:",postNo);
+        $.ajax({
+            type: 'GET',
+            url: `/api/posts/${postNo}`,
+            success: function (response){
+                // console.log(response);
+                let hasImage = response.images;
+                let html = ``;
+                if (hasImage == null){
+                    html = `<div class="title">
+                                ${response.postTitle}
+                            </div>
+                            <div class="nameDate">
+                                <span>${response.nickname}</span> ${response.createdAt}
+                            </div>
+                            <div class="content" style="white-space:pre;">${response.postContents}</div>
+                            <div> view: ${response.views}</div>`;
+                }else{
+                    html = `<div class="title">
+                                ${response.postTitle}
+                            </div>
+                            <div class="nameDate">
+                                <span>${response.nickname}</span> ${response.createdAt}
+                            </div>
+                            <img src="/images/${response.images}" alt="${response.images}">
+                            <div class="content" style="white-space:pre;">${response.postContents}</div>
+                            <div> view: ${response.views}</div>`;
+                }
+                $('#post').append(html);
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                alert(jqXHR.responseJSON.result);
+            }
+        })
+        // 게시글 목록/수정/삭제 버튼
+        function list(){
+            location.href = "/";
+        }
+        // function edit(){
+        //     location.href = "/edit?id="+id;
+        // }
+        // function remove(){
+        //     $.ajax({
+        //         type: 'DELETE',
+        //         url: `/board/${id}`,
+        //         success: function (respense){
+        //             location.href = "/";
+        //         }
+        //     })
+        // }
+
+        $(document).ready(function () {
+
+        })
+    </script>
+    <title>글보기</title>
+</head>
+<body>
+<div class="header">
+    매거진
+</div>
+<div class="nav">
+    <div class="nav-see active">
+        매거진 글보기
+    </div>
+</div><br><br>
+<div id="see-area">
+    <div id="list-container">
+
+        <div class="post" id="post">
+<!--            <div class="title">-->
+<!--                제목입니다.11-->
+<!--            </div>-->
+<!--            <div class="nameDate">-->
+<!--                <span>베리</span> 2022-04-11-->
+<!--            </div>-->
+<!--            <div class="content">-->
+<!--                내용입니다.<br>내용입니다.<br>내용입니다.<br>내용입니다.<br>내용입니다.-->
+<!--            </div>-->
+        </div>
+        <div id="comment-container">
+<!--            <div class="comment">-->
+<!--                <span class="commentName">펭수</span>-->
+<!--                <span class="commentDate">2010-03-03</span>-->
+<!--                <span>내용입니내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다내용입니다다.</span>-->
+<!--                <span id="commentEditArea">-->
+<!--                    <label for="name">이름</label>-->
+<!--                    <input type="text" id="nameEdit" name="name" style="width:70px;height:20px;font-size:13px;">-->
+<!--                    <label for="comment">내용</label>-->
+<!--                    <input type="text" id="commentEdit" name="comment" style="width:270px;height:20px;font-size:13px;">-->
+<!--                    <button class="cEditSave">저장</button>-->
+<!--                    <button class="cEditCancel">취소</button>-->
+<!--                </span>-->
+<!--                <div class="commentBtns">-->
+<!--                    <button class="commentBtn cEdit">수정</button>-->
+<!--                    <button class="commentBtn cDel">삭제</button>-->
+<!--                    <span class="menu"> ≡ </span>-->
+<!--                    <span class="close"> x </span>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        <div>
+<!--            <span id="commentInput">-->
+<!--                <label for="name">이름</label>-->
+<!--                <input type="text" id="name" name="name" style="width:70px;height:20px;font-size:13px;">-->
+<!--                <label for="comment">내용</label>-->
+<!--                <input type="text" id="comment" name="comment" style="width:270px;height:20px;font-size:13px;">-->
+<!--            </span>-->
+<!--            <button id="cCancel">취소</button>-->
+<!--            <button id="cSave">등록</button>-->
+        </div>
+        <div>
+<!--            <button id="cWrite">댓글쓰기</button>-->
+        </div>
+
+
+    </div>
+    <button class="write" onclick="list()">목록</button>
+<!--    <button id="edit" onclick="edit()">수정</button>-->
+<!--    <button id="delete" onclick="remove()">삭제</button>-->
+</div>
+</body>
+</html>

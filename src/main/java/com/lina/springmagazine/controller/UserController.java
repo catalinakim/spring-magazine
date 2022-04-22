@@ -29,6 +29,12 @@ public class UserController {
         return "login";
     }
 
+    // 회원 로그인 페이지
+    @GetMapping("/api/register")
+    public String register() {
+        return "signup";
+    }
+
     // 회원 가입 요청 처리
     @PostMapping("/api/register")
     @ResponseBody

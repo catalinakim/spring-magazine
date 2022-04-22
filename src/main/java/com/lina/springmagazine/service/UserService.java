@@ -27,13 +27,14 @@ public class UserService {
     }
 
     public String registerUser(@RequestBody UserDto userDto){
-        String user_id = userDto.getUser_id();
+        String username = userDto.getUsername();
         String nickname = userDto.getNickname();
         String email = userDto.getEmail();
         String password = userDto.getPassword();
 
         // 회원 ID 중복 확인
-        Optional<Users> foundId = userRepository.findByUserId(user_id);
+        //Optional<Users> foundId = userRepository.findByUserId(user_id);
+        Optional<Users> foundId = userRepository.findByUsername(username);
         if (foundId.isPresent()){
             //throw new IllegalArgumentException("사용중인 ID입니다.");
             return "중복 ID";
