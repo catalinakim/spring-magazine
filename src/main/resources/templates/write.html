@@ -10,8 +10,6 @@
 
         function save(){
 
-            writeForm
-
             // Get form
             var form = $('#writeForm')[0];
             // Create an FormData object
@@ -33,7 +31,7 @@
                 },
                 error: function (e) {
                     console.log("ERROR : ", e);
-                    alert(jqXHR.responseJSON.result);
+                    alert(e.responseJSON);
                 }
             });
 

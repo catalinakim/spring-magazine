@@ -55,8 +55,9 @@ public class PostController {
             if (!file.isEmpty()){
                 post.setImages(file.getOriginalFilename());
                 // 경로 지정
-                String path = "C:\\Users\\sesan\\IdeaProjects\\spring-magazine\\src\\main\\resources\\static\\images\\";
+                //String path = "C:\\Users\\sesan\\IdeaProjects\\spring-magazine\\src\\main\\resources\\static\\images\\";
                 //String path = request.getSession().getServletContext().getRealPath("/") + "resources/static/images/";  //톰캣경로..
+                String path = "/home/ubuntu/images/"; //AWS
                 File file_ = new File(path + file.getOriginalFilename());
                 if(!file_.exists()){
                     file_.mkdirs();

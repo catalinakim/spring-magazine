@@ -32,15 +32,16 @@
                             <div class="nameDate">
                                 <span>${response.nickname}</span> ${response.createdAt}
                             </div>
-                            <img src="/images/${response.images}" alt="${response.images}">
+                            <img src="/home/ubuntu/images/${response.images}" alt="${response.images}">
                             <div class="content" style="white-space:pre;">${response.postContents}</div>
                             <div> view: ${response.views}</div>`;
                 }
+                //로컬경로: src="/images/${response.images}
                 $('#post').append(html);
             },
             error: function (e) {
                 console.log("ERROR : ", e);
-                alert(jqXHR.responseJSON.result);
+                // alert(jqXHR.responseJSON.result);
             }
         })
         // 게시글 목록/수정/삭제 버튼
