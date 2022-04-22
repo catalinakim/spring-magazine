@@ -36,7 +36,9 @@ public class HomeController {
 
     @GetMapping("/post/{id}")
     public String viewPost(Model model, @PathVariable Long id) {
+        String userHome = System.getProperty("user.home");
         model.addAttribute("postNo", id);
+        model.addAttribute("path", userHome+"/images/");
         return "board";
     }
 

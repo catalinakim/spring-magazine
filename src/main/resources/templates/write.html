@@ -27,11 +27,12 @@
                 cache: false,
                 timeout: 600000,
                 success: function (response) {
-                    alert(response.result);
+                    console.log(response);
+                    location.href = "/";
                 },
                 error: function (e) {
                     console.log("ERROR : ", e);
-                    alert(e.responseJSON);
+                    // alert(e.responseJSON);
                 }
             });
 
