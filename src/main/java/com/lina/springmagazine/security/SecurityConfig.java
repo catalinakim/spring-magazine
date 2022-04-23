@@ -62,8 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")  // 접근이 차단된 페이지 클릭시 이동할 url
                     //.usernameParameter("nickname")      // form 태그 내 id에 맵핑되는 name
                     .loginProcessingUrl("/api/login") // 로그인 처리시 맵핑되는 url
-                    .defaultSuccessUrl("/", true)  // 로그인 처리 후 성공 시 URL
-                    .failureUrl("/error")  // 로그인 처리 후 실패 시 URL
+                    //프론트 CORS 해결위해 주석처리 테스트
+                    //.defaultSuccessUrl("/", true)  // 로그인 처리 후 성공 시 URL
+                    //.failureUrl("/error")  // 로그인 처리 후 실패 시 URL
                     .permitAll() //무조건 접근을 허용 */
                 .and()
                     .logout()
