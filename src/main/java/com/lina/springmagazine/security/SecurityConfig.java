@@ -12,12 +12,16 @@ package com.lina.springmagazine.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+
+        // CorsConfigurationSource 를 cors 정책의 설정으로 등록
+        http.cors()
+                .configurationSource(corsConfigurationSource());
+
         // CSRF protection 을 비활성화
         http.csrf().disable();
 
@@ -62,9 +71,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")  // 접근이 차단된 페이지 클릭시 이동할 url
                     //.usernameParameter("nickname")      // form 태그 내 id에 맵핑되는 name
                     .loginProcessingUrl("/api/login") // 로그인 처리시 맵핑되는 url
-                    //프론트 CORS 해결위해 주석처리 테스트
-                    //.defaultSuccessUrl("/", true)  // 로그인 처리 후 성공 시 URL
-                    //.failureUrl("/error")  // 로그인 처리 후 실패 시 URL
+                    .defaultSuccessUrl("/")  // 로그인 처리 후 성공 시 URL
+                    .failureUrl("/error")  // 로그인 처리 후 실패 시 URL
+                    //프론트 CORS 해결위해 테스트
+                    //.successHandler(new LoginSuccessHandler())
                     .permitAll() //무조건 접근을 허용 */
                 .and()
                     .logout()
@@ -74,5 +84,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //.logoutSuccessHandler(logoutSuccessHandler());
 
     }
+
+    // CORS 정책 필터
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("Authorization");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+
 
 }
