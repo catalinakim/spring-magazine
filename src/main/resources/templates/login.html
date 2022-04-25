@@ -7,9 +7,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css">
+<!--    <link rel="stylesheet" href="/style.css">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
+    <script>
+        function login() {
+            //event.preventDefault();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let data = {
+                "username": username,
+                "password": password,
+            }
+            $.ajax({
+                type: "POST",
+                // url: `http://13.125.18.54/api/login`,
+                url: `/api/login`,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log("성공",response);
+                    //window.location.href = "/";
+                },error: function (error) {
+                    console.log("실패",error);
+                    alert("로그인 실패", error.statusText);
+                    //alert(jqXHR.responseJSON.msg);
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 <div id="login-form">
@@ -19,7 +46,8 @@
         회원 가입하기
     </button>
     <br><br>
-    <form action="/api/login" method="post">
+<!--    <form action="/api/login" method="post">-->
+    <form onsubmit="return false">
         <div class="login-id-label">유저네임</div>
 <!--        <input type="text" name="username" class="login-input-box" value="aaa">-->
         <input type="text" name="username" class="login-input-box">
@@ -28,7 +56,7 @@
 <!--        <input type="password" name="password" class="login-input-box" value="1234">-->
         <input type="password" name="password" class="login-input-box">
 
-        <button id="login-id-submit">로그인</button>
+        <button id="login-id-submit" onclick="login()">로그인</button>
     </form>
     <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
 </div>
