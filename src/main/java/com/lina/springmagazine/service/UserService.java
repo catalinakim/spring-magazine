@@ -1,13 +1,9 @@
 package com.lina.springmagazine.service;
 
 import com.lina.springmagazine.dto.UserDto;
-import com.lina.springmagazine.model.UserRoleEnum;
 import com.lina.springmagazine.model.Users;
 import com.lina.springmagazine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,6 +73,7 @@ public class UserService {
         //return "{'result' : 'success', 'msg': '회원가입 성공'}";  //문자열로 리턴됨
         return "회원가입 성공";
     }
+
 
 
 //    public void login(String nickname, String password) {

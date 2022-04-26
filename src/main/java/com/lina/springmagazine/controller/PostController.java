@@ -42,7 +42,7 @@ public class PostController {
         Users userInfo;
         if(userImpl != null){
             System.out.println("Nick:" + userImpl.getUsername());  //null->수정
-            userInfo = userRepository.findByNickname(userImpl.getUsername()).orElseThrow(
+            userInfo = userRepository.findByUsername(userImpl.getUsername()).orElseThrow(
                     () -> new NullPointerException("해당 닉네임이 존재하지 않습니다."));
         }else{
             System.out.println("userImpl is null");
