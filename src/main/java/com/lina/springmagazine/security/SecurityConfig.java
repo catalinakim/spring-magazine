@@ -44,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         // CorsConfigurationSource 를 cors 정책의 설정으로 등록
-        http.cors()
-                .configurationSource(corsConfigurationSource());
+        //http.cors()
+                //.configurationSource(corsConfigurationSource());
 
         // CSRF protection 을 비활성화
         http.csrf().disable();
@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //.usernameParameter("nickname")      // form 태그 내 id에 맵핑되는 name
                     .loginProcessingUrl("/api/login") // 로그인 처리시 맵핑되는 url
                     .defaultSuccessUrl("/")  // 로그인 처리 후 성공 시 URL
-                    .failureUrl("/error")  // 로그인 처리 후 실패 시 URL
+                    //.failureUrl("/error")  // 로그인 처리 후 실패 시 URL
                     //프론트 CORS 해결위해 테스트
                     //.successHandler(new LoginSuccessHandler())
                     .permitAll() //무조건 접근을 허용 */
@@ -86,17 +86,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // CORS 정책 필터
+    /*
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
+        //configuration.addAllowedOrigin("*"); // CORS 요청 허용 Site
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addExposedHeader("Authorization");
+        configuration.addExposedHeader("Authorization");  //jwt토큰에 필요한 추가 해더
+        //configuration.setAllowCredentials(true); // 자격증명과 함께 요청 여부 (Authorization로 사용자 인증 사용 시 true)
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
 
 
 
