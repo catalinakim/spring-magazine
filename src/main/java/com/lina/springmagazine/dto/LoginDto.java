@@ -28,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginDto implements UserDetails {
     private String username;
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
     private String tokenId;
 

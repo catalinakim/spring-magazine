@@ -25,12 +25,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 //@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
         super(); //부모 클래스의 멤버를 초기화할 수 있도록 해줍니다.
-        this.userDetailsService = userDetailsService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
 //    @Bean
@@ -114,10 +114,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * adminService에서 UserDetailsService를 implements하여 loaduserbyUsername() 메서드 구현
      * 비밀번호 암호화
      */
-    //@Autowired
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        //auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     /**
@@ -125,6 +125,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Custom Login에서 사용
      * UsernamePasswordAuthenticationToken을 파라미터로 인증을 수행
      */
+    // AuthenticationManager 를 외부에서 사용 하기 위해, AuthenticationManagerBean 을 이용하여
+    // Sprint Securtiy 밖으로 AuthenticationManager 빼 내야 한다.
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
