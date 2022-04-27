@@ -2,8 +2,10 @@ package com.lina.springmagazine.controller;
 
 import com.lina.springmagazine.dto.LoginDto;
 import com.lina.springmagazine.dto.UserDto;
+import com.lina.springmagazine.model.AuthenticationToken;
 import com.lina.springmagazine.model.ResponseMsg;
 //import com.lina.springmagazine.security.UserDetailsServiceImpl;
+import com.lina.springmagazine.security.UserDetailsServiceImpl;
 import com.lina.springmagazine.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-    //private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     // 회원 로그인 페이지
     @GetMapping("/login")
@@ -130,7 +132,12 @@ public class UserController {
             responseMsg = new ResponseMsg("success", "로그인 성공");
             //return new ResponseEntity(responseMsg, HttpStatus.OK);
             //return ResponseEntity.ok().body(responseMsg);
-            return ResponseEntity.ok().build();
+            //return ResponseEntity.ok().build();
+
+            //https://cusonar.tistory.com/17?category=607756
+            //return new AuthenticationToken(authentication.getName(), session.getId());
+            return new ResponseEntity(new AuthenticationToken(authentication.getName(), session.getId()), HttpStatus.OK);
+
 
 //            if (authentication.isAuthenticated() == true) {
 //                responseMsg = new ResponseMsg("success", "로그인 성공");
