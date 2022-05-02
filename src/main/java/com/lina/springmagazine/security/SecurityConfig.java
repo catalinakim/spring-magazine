@@ -10,23 +10,27 @@ package com.lina.springmagazine.security;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)  //어노테이션 기반의 보안을 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CorsFilter corsFilter;
+
+    public SecurityConfig(CorsFilter corsFilter) {
+        this.corsFilter = corsFilter;
+    }
+
 
     @Bean
     public BCryptPasswordEncoder encodePassword() {
@@ -44,11 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         // CorsConfigurationSource 를 cors 정책의 설정으로 등록
-        http.cors()
-                .configurationSource(corsConfigurationSource());
+        //http.cors().configurationSource(corsConfigurationSource());
 
         // CSRF protection 을 비활성화
-        http.csrf().disable();
+        http.cors()
+                .and()
+                .csrf().disable();
 
         http.authorizeRequests()
 
@@ -73,8 +78,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/api/login") // 로그인 처리시 맵핑되는 url
                     .defaultSuccessUrl("/")  // 로그인 처리 후 성공 시 URL
                     .failureUrl("/error")  // 로그인 처리 후 실패 시 URL
-                    //프론트 CORS 해결위해 테스트
-                    //.successHandler(new LoginSuccessHandler())
+                    //.successHandler(new LoginSuccessHandler())  //프론트 CORS 해결위해 테스트
+                    // 시큐리티 예외처리
+                    // addFilterBefore : 지정된 필터 앞에 커스텀 필터를 추가 (UsernamePasswordAuthenticationFilter 보다 먼저 실행된다)
+                    //.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class) //필터가 없어서 안되는듯
                     .permitAll() //무조건 접근을 허용 */
                 .and()
                     .logout()
@@ -86,17 +93,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // CORS 정책 필터
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.addExposedHeader("Authorization");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.setAllowCredentials(true); // 자격증명과 함께 요청 여부 (Authorization로 사용자 인증 사용 시 true)
+//        //configuration.addAllowedOrigin("*");
+//        configuration.addAllowedOrigin("http://localhost:3000");
+//        configuration.addAllowedOrigin("http://localhost:7070");
+//        configuration.addAllowedHeader("*");
+//        configuration.addAllowedMethod("*");
+//        configuration.addExposedHeader("Authorization");
+//
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 
 
